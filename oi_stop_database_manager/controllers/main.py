@@ -29,9 +29,9 @@ class MyDatabase(Database):
     def drop(self, *args, **kwargs):    
         raise BadRequest()
     
-    @http.route()
-    def backup(self, *args, **kwargs):    
-        raise BadRequest()                    
+    #@http.route()
+    #def backup(self, *args, **kwargs):    
+    #    raise BadRequest()
         
     @http.route()
     def restore(self, *args, **kwargs):    
