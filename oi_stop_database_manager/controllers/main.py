@@ -78,7 +78,7 @@ class MyDatabase(Database):
     #def backup(self, *args, **kwargs):    
     #    raise BadRequest()
     
-    @http.route('/web/database/backup', type='http', auth="none", methods=['POST'], csrf=False, cors='localhost')
+    @http.route('/web/database/backup', type='http', auth="none", methods=['POST'], csrf=False, cors='http://localhost:8069')
     def backup(self, master_pwd, name, backup_format = 'zip'):
         insecure = odoo.tools.config.verify_admin_password('admin')
         if insecure and master_pwd:
@@ -90,6 +90,7 @@ class MyDatabase(Database):
             headers = [
                 ('Content-Type', 'application/octet-stream; charset=binary'),
                 ('Content-Disposition', content_disposition(filename)),
+                ('Access-Control-Allow-Origin', 'http://localhost:8069')
             ]
             dump_stream = odoo.service.db.dump_db(name, None, backup_format)
             response = werkzeug.wrappers.Response(dump_stream, headers=headers, direct_passthrough=True)
